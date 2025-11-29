@@ -1,0 +1,15 @@
+#创建临时表
+CREATE TABLE temp_behavior LIKE userbehavior;
+
+#截取10w条数据作为临时表的数据
+INSERT INTO temp_behavior
+SELECT * FROM userbehavior LIMIT 100000;
+#查看临时表的导入情况
+SELECT * FROM temp_behavior;
+
+
+###计算页面浏览量###
+SELECT dates, count(*) as 'pv'
+FROM temp_behavior
+WHERE behavior_type='pv'
+GROUP BY dates;
